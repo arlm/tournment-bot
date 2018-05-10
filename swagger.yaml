@@ -1,0 +1,838 @@
+swagger: "2.0"
+info:
+  description: "This is the API to the Tournment Bot, now only supporting [Telegram Bot Webhooks](https://core.telegram.org/bots/webhooks)."
+  version: "1.0.0"
+  title: "Tournment Bot"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "alexandre.marcondes@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v1"
+tags:
+- name: "telegram"
+  description: "Everything about Telegram"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "https"
+paths:
+  /telegram/webhook:
+    post:
+      tags:
+      - "telegram"
+      summary: "Telegram webhook endpoint"
+      description: "See Telegram webhooks [documentation](https://core.telegram.org/bots/webhooks)"
+      operationId: "telegramWebhook"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Telegram [update event](https://core.telegram.org/bots/api#update)"
+        required: true
+        schema:
+          $ref: "#/definitions/TelegramUpdate"
+      responses:
+        200:
+          description: "Result"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        405:
+          description: "Invalid input"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+definitions:
+  TelegramMessage:
+    type: object
+    description: "This object represents a message."
+    required: 
+    - message_id
+    - date
+    properties:
+      message_id:
+        type: integer
+        description: "Unique message identifier inside this chat"
+      from:
+        $ref: '#/definitions/TelegramUser'
+      date:
+        type: integer
+        description: "Date the message was sent in Unix time"
+      chat:
+        $ref: '#/definitions/TelegramChat'
+      forward_from:
+        $ref: '#/definitions/TelegramUser'
+      forward_from_chat:
+        $ref: '#/definitions/TelegramChat'
+      forward_from_message_id:
+        type: integer
+        description: "For messages forwarded from channels, identifier of the original message in the channel"
+      forward_signature:
+        type: string
+        description: "For messages forwarded from channels, signature of the post author if present"
+      forward_date:
+        type: integer
+        description: "For forwarded messages, date the original message was sent in Unix time"
+      reply_to_message:
+        $ref: '#/definitions/TelegramMessage'
+      edit_date:
+        type: integer
+        description: "Date the message was last edited in Unix time"
+      media_group_id:
+        type: string
+        description: "The unique identifier of a media message group this message belongs to"
+      author_signature:
+        type: string
+        description: "Signature of the post author for messages in channels"
+      text:
+        type: string
+        description: "For text messages, the actual UTF-8 text of the message, 0-4096 characters."
+      entities:
+        type: array
+        description: "For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text"
+        items:
+          $ref: '#/definitions/TelegramMessageEntity'
+      caption_entities:
+        type: array
+        description: "For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption"
+        items:
+          $ref: '#/definitions/TelegramMessageEntity'
+      audio:
+        $ref: '#/definitions/TelegramAudio'
+      document:
+        $ref: '#/definitions/TelegramDocument'
+      game:
+        $ref: '#/definitions/TelegramGame'
+      photo:
+        type: array
+        description: "Message is a photo, available sizes of the photo"
+        items:
+          $ref: '#/definitions/TelegramPhotoSize'
+      sticker:
+        $ref: '#/definitions/TelegramSticker'
+      video:
+        $ref: '#/definitions/TelegramVideo'
+      voice:
+        $ref: '#/definitions/TelegramVoice'
+      video_note:
+        $ref: '#/definitions/TelegramVideoNote'
+      caption:
+        type: string
+        description: "Caption for the audio, document, photo, video or voice, 0-200 characters"
+      contact:
+        $ref: '#/definitions/TelegramContact'
+      location:
+        $ref: '#/definitions/TelegramLocation'
+      venue:
+        $ref: '#/definitions/TelegramVenue'
+      new_chat_members:
+        type: array
+        description: "New members that were added to the group or supergroup and information about them (the bot itself may be one of these members)"
+        items:
+          $ref: '#/definitions/TelegramUser'
+      left_chat_member:
+        $ref: '#/definitions/TelegramUser'
+      new_chat_title:
+        type: string
+        description: "A chat title was changed to this value"
+      new_chat_photo:
+        type: array
+        description: "A chat photo was change to this value"
+        items:
+          $ref: '#/definitions/TelegramPhotoSize'
+      delete_chat_photo:
+        type: boolean
+        description: "Service message: the chat photo was deleted"
+      group_chat_created:
+        type: boolean
+        description: "Service message: the group has been created"
+      supergroup_chat_created:
+        type: boolean
+        description: "Service message: the supergroup has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a supergroup when it is created. It can only be found in reply_to_message if someone replies to a very first message in a directly created supergroup."
+      channel_chat_created:
+        type: boolean
+        description: "Service message: the channel has been created. This field can‘t be received in a message coming through updates, because bot can’t be a member of a channel when it is created. It can only be found in reply_to_message if someone replies to a very first message in a channel."
+      migrate_to_chat_id:
+        type: integer
+        description: "The group has been migrated to a supergroup with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier."
+      migrate_from_chat_id:
+        type: integer
+        description: "The supergroup has been migrated from a group with the specified identifier. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier."
+      pinned_message:
+        $ref: '#/definitions/TelegramMessage'
+      invoice:
+        $ref: '#/definitions/TelegramInvoice'
+      successful_payment:
+        $ref: '#/definitions/TelegramSuccessfulPayment'
+      connected_website:
+        type: string
+        description: "The domain name of the website on which the user has logged in."
+  TelegramMessageEntity:
+    type: object
+    description: "This object represents one special entity in a text message. For example, hashtags, usernames, URLs, etc."
+    required:
+    - type
+    - offset
+    - length
+    properties:
+      type:
+        type: string
+        description: "Type of the entity. Can be mention (@username), hashtag, bot_command, url, email, bold (bold text), italic (italic text), code (monowidth string), pre (monowidth block), text_link (for clickable text URLs), text_mention (for users without usernames)"
+        enum:
+        - mention
+        - hashtag
+        - bot_command
+        - url
+        - email
+        - bold
+        - italic
+        - code
+        - pre
+        - text_link
+        - text_mention
+      offset:
+        type: integer
+        description: "Offset in UTF-16 code units to the start of the entity"
+      length:
+        type: integer
+        description: "Length of the entity in UTF-16 code units"
+      url:
+        type: string
+        description: "For “text_link” only, url that will be opened after user taps on the text"
+      user:
+        $ref: '#/definitions/TelegramUser'
+  TelegramUser:
+    type: object
+    description: "This object represents a Telegram user or bot."
+    required: 
+    - id
+    - is_bot
+    - first_name
+    properties:
+      id:
+        type: integer
+        description: "Unique identifier for this user or bot"
+      is_bot:
+        type: boolean 
+        description: "True, if this user is a bot"        
+      first_name:
+        type: string
+        description: "User‘s or bot’s first name"
+      last_name:
+        type: string
+        description: "User‘s or bot’s last name"
+      username:
+        type: string
+        description: "User‘s or bot’s username"
+      language_code:
+        type: string
+        description: "IETF language tag of the user's language"
+  TelegramChat:
+    type: object
+    description: "This object represents a chat."
+    required:
+    - id
+    - type
+    properties:
+      id:
+        type: integer
+        x-nullable: false
+        description: "Unique identifier for this chat. This number may be greater than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this identifier."
+      type:
+        type: string
+        description: "Type of chat, can be either “private”, “group”, “supergroup” or “channel”"
+        enum:
+        - private
+        - group
+        - supergroup
+        - channel
+      title:
+        type: string
+        description: "Title, for supergroups, channels and group chats"
+      username:
+        type: string
+        description: "Username, for private chats, supergroups and channels if available"
+      first_name:
+        type: string
+        description: "First name of the other party in a private chat"
+      last_name:
+        type: string
+        description: "Last name of the other party in a private chat"
+      all_members_are_administrators:
+        type: boolean
+        description: "True if a group has ‘All Members Are Admins’ enabled."
+      photo:
+        $ref: '#/definitions/TelegramChatPhoto'
+      description:
+        type: string
+        description: "Description, for supergroups and channel chats. Returned only in getChat."
+      invite_link:
+        type: string
+        description: "Chat invite link, for supergroups and channel chats. Returned only in getChat."
+      pinned_message:
+        $ref: '#/definitions/TelegramMessage'
+      sticker_set_name:
+        type: string
+        description: "For supergroups, name of group sticker set. Returned only in getChat."
+      can_set_sticker_set:
+        type: boolean
+        description: "True, if the bot can change the group sticker set. Returned only in getChat."
+  TelegramChatPhoto:
+    type: object
+    description: "This object represents a chat photo."
+    required: 
+    - small_file_id
+    - big_file_id
+    properties:
+      small_file_id:
+        type: string
+        description: "Unique file identifier of small (160x160) chat photo. This file_id can be used only for photo download."
+      big_file_id:
+        type: string
+        description: "Unique file identifier of big (640x640) chat photo. This file_id can be used only for photo download."
+  TelegramUpdate:
+    type: "object"
+    description: "This object represents an incoming update. At most one of the optional parameters can be present in any given update."
+    required:
+    - update_id
+    properties:
+      update_id:
+        type: "integer"
+        format: "int64"
+        description: "The update‘s unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you’re using Webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially."
+      message:
+        $ref: "#/definitions/TelegramMessage"
+      edited_message:
+        $ref: "#/definitions/TelegramMessage"       
+      channel_post:
+        $ref: "#/definitions/TelegramMessage"
+      edited_channel_post:
+        $ref: "#/definitions/TelegramMessage"
+      inline_query:
+        $ref: "#/definitions/TelegramInlineQuery"
+      chosen_inline_result:
+        $ref: "#/definitions/TelegramChosenInlineResult"
+      callback_query:
+        $ref: "#/definitions/TelegramCallbackQuery"
+      shipping_query:
+        $ref: "#/definitions/TelegramShippingQuery"
+      pre_checkout_query:
+        $ref: "#/definitions/TelegramPreCheckoutQuery"
+  TelegramAudio:
+    type: object
+    description: "This object represents an audio file to be treated as music by the Telegram clients."
+    required:
+    - file_id
+    - duration
+    properties:
+      file_id:
+        type: string
+        description: "Unique identifier for this file"
+      duration:
+        type: integer
+        description: "Duration of the audio in seconds as defined by sender"
+      performer:
+        type: string
+        description: "Performer of the audio as defined by sender or by audio tags"
+      title:
+        type: string
+        description: "Title of the audio as defined by sender or by audio tags"
+      mime_type:
+        type: string
+        description: "MIME type of the file as defined by sender"
+      file_size:
+        type: integer
+        description: "File size"
+  TelegramDocument:
+    type: object
+    description: "This object represents a general file (as opposed to photos, voice messages and audio files)."
+    required:
+    - file_id
+    properties:
+      file_id:
+        type: string
+        description: "Unique file identifier"
+      thumb:
+        $ref: '#/definitions/TelegramPhotoSize'
+      file_name:
+        type: string
+        description: "Original filename as defined by sender"
+      mime_type:
+        type: string
+        description: "MIME type of the file as defined by sender"
+      file_size:
+        type: integer
+        description: "File size"
+  TelegramPhotoSize:
+    type: object
+    description: "This object represents one size of a photo or a file / sticker thumbnail."
+    required:
+    - files_id
+    - width
+    - height
+    properties:
+      file_id:
+        type: string
+        description: "Unique identifier for this file"
+      width:
+        type: integer
+        description: "Photo width"
+      height:
+        type: integer
+        description: "Photo height"
+      file_size:
+        type: integer
+        description: "File size"
+  TelegramVideo:
+    type: object
+    description: "This object represents a video file."
+    required: 
+    - file_id
+    - width
+    - height
+    - duration
+    properties:
+      file_id:
+        type: string
+        description: "Unique identifier for this file"
+      width:
+        type: integer
+        description: "Video width as defined by sender"
+      height:
+        type: integer
+        description: "Video height as defined by sender"
+      duration:
+        type: integer
+        description: "Duration of the video in seconds as defined by sender"
+      thumb:
+        $ref: '#/definitions/TelegramPhotoSize'
+      mime_type:
+        type: string
+        description: "Mime type of a file as defined by sender"
+      file_size:
+        type: integer
+        description: "File size"
+  TelegramVoice:
+    type: object
+    description: "This object represents a voice note."
+    required: 
+    - file_id
+    - duration
+    properties:
+      file_id:
+        type: string
+        description: "Unique identifier for this file"
+      duration:
+        type: integer
+        description: "Duration of the audio in seconds as defined by sender"
+      mime_type:
+        type: string
+        description: "MIME type of the file as defined by sender"
+      file_size:
+        type: integer
+        description: "File size"
+  TelegramVideoNote:
+    type: object
+    description: "This object represents a video message (available in Telegram apps as of v.4.0)."
+    required: 
+    - file_id
+    - length
+    - duration
+    properties:
+      file_id:
+        type: string
+        description: "Unique identifier for this file"
+      length:
+        type: integer
+        description: "Video width and height as defined by sender"
+      duration:
+        type: integer
+        description: "Duration of the video in seconds as defined by sender"
+      thumb:
+        $ref: '#/definitions/TelegramPhotoSize'
+      file_size:
+        type: integer
+        description: "File size"
+  TelegramContact:
+    type: object
+    description: "This object represents a phone contact"
+    required: 
+    - phone_number
+    - first_name
+    properties:
+      phone_number:
+        type: string
+        description: "Contact's phone number"
+      first_name:
+        type: string
+        description: "Contact's first name"
+      last_name:
+        type: string
+        description: "Contact's last name"
+      user_id:
+        type: integer
+        description: "Contact's user identifier in Telegram"
+  TelegramLocation:
+    type: object
+    description: "This object represents a point on the map."
+    required: 
+    - longitude
+    - latitude
+    properties:
+      longitude:
+        type: number
+        description: "Longitude as defined by sender"
+      latitude:
+        type: number
+        description: "Longitude as defined by sender"
+  TelegramVenue:
+    type: object
+    description: "This object represents a venue."
+    required:
+    - location
+    - title
+    - address
+    properties:
+      location:
+        $ref: '#/definitions/TelegramLocation'
+      title:
+        type: string
+        description: "Name of the venue"
+      address:
+        type: string
+        description: "Address of the venue"
+      foursquare_id:
+        type: string
+        description: "Foursquare identifier of the venue"
+  TelegramSticker:
+    type: object
+    description: "This object represents a sticker."
+    required: 
+    - file_id
+    - width
+    - height
+    properties:
+      file_id:
+        type: string
+        description: "Unique identifier for this file"
+      width:
+        type: integer
+        description: "Sticker width"
+      height:
+        type: integer
+        description: "Sticker height"
+      thumb:
+        $ref: '#/definitions/TelegramPhotoSize'
+      emoji:
+        type: string
+        description: "Emoji associated with the sticker"
+      set_name:
+        type: string
+        description: "Name of the sticker set to which the sticker belongs"
+      mask_position:
+        $ref: '#/definitions/TelegramMaskPosition'
+      file_size:
+        type: integer
+        description: "File size"
+  TelegramMaskPosition:
+    type: object
+    description: "This object describes the position on faces where a mask should be placed by default."
+    required: 
+    - point
+    - x_shift
+    - y_shift
+    - scale
+    properties:
+      point:
+        type: string
+        description: "The part of the face relative to which the mask should be placed. One of “forehead”, “eyes”, “mouth”, or “chin”."
+        enum:
+        - forehead
+        - eyes
+        - mouth
+        - chin
+      x_shift:
+        type: number
+        description: "Shift by X-axis measured in widths of the mask scaled to the face size, from left to right. For example, choosing -1.0 will place mask just to the left of the default mask position."
+      y_shift:
+        type: number
+        description: "Shift by Y-axis measured in heights of the mask scaled to the face size, from top to bottom. For example, 1.0 will place the mask just below the default mask position."
+      scale:
+        type: number
+        description: "Mask scaling coefficient. For example, 2.0 means double size."
+      zoom:
+        type: number
+        description: "Mask scaling coefficient. For example, 2.0 means double size."
+  TelegramGame:
+    type: object
+    description: "This object represents a game. Use BotFather to create and edit games, their short names will act as unique identifiers."
+    required:
+    - title
+    - description
+    - photo
+    properties:
+      title:
+        type: string
+        description: "Title of the game"
+      description:
+        type: string
+        description: "Description of the game"
+      photo:
+        type: array
+        description: "Photo that will be displayed in the game message in chats."
+        items:
+          $ref: '#/definitions/TelegramPhotoSize'
+      text:
+        type: string
+        description: "Brief description of the game or high scores included in the game message. Can be automatically edited to include current high scores for the game when the bot calls setGameScore, or manually edited using editMessageText. 0-4096 characters."
+      text_entities:
+        type: array
+        description: "Special entities that appear in text, such as usernames, URLs, bot commands, etc."
+        items:
+          $ref: '#/definitions/TelegramMessageEntity'
+      animation:
+        $ref: '#/definitions/TelegramAnimation'
+  TelegramAnimation:
+    type: object
+    description: "You can provide an animation for your game so that it looks stylish in chats (check out Lumberjack for an example). This object represents an animation file to be displayed in the message containing a game."
+    required:
+    - file_id
+    properties:
+      file_id:
+        type: string
+        description: "Unique file identifier"
+      thumb:
+        $ref: '#/definitions/TelegramPhotoSize'
+      file_name:
+        type: string
+        description: "Original animation filename as defined by sender"
+      mime_type:
+        type: string
+        description: "MIME type of the file as defined by sender"
+      file_size:
+        type: integer
+        description: "File size"
+  TelegramInvoice:
+    type: object
+    description: "This object contains basic information about an invoice"
+    required:
+    - title
+    - description
+    - start_parameter
+    - currency
+    - total_amount
+    properties:
+      title:
+        type: string
+        description: "Product name"
+      description:
+        type: string
+        description: "Product description"
+      start_parameter:
+        type: string
+        description: "Unique bot deep-linking parameter that can be used to generate this invoice"
+      currency:
+        type: string
+        description: "Three-letter ISO 4217 currency code"
+      total_amount:
+        type: integer
+        description: "Total price in the smallest units of the currency (integer, not float/double). For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies)."
+  TelegramSuccessfulPayment:
+    type: object
+    description: "This object contains basic information about a successful payment."
+    required: 
+    - currency
+    - total_amount
+    - invoice_payload
+    - telegram_payment_charge_id
+    - provider_payment_charge_id
+    properties:
+      currency:
+        type: string
+        description: "Three-letter ISO 4217 currency code"
+      total_amount:
+        type: integer
+        description: "Total price in the smallest units of the currency (integer, not float/double). For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies)."
+      invoice_payload:
+        type: string
+        description: "Bot specified invoice payload"
+      shipping_option_id:
+        type: string
+        description: "Identifier of the shipping option chosen by the user"
+      order_info:
+        $ref: '#/definitions/TelegramOrderInfo'
+      telegram_payment_charge_id:
+        type: string
+        description: "Telegram payment identifier"
+      provider_payment_charge_id:
+        type: string
+  TelegramOrderInfo:
+    type: object
+    description: "This object represents information about an order."
+    properties:
+      name:
+        type: string
+        description: "User name"
+      phone_number:
+        type: string
+        description: "User's phone number"
+      email:
+        type: string
+        description: "User email"
+      shipping_address:
+        $ref: '#/definitions/TelegramShippingAddress'
+  TelegramShippingAddress:
+    type: object
+    description: "This object represents a shipping address."
+    properties:
+      country_code:
+        type: string
+        description: "ISO 3166-1 alpha-2 country code"
+      stat:
+        type: string
+        description: "State, if applicable"
+      city:
+        type: string
+        description: "City"
+      street_line1:
+        type: string
+        description: "First line for the address"
+      street_line2:
+        type: string
+        description: "Second line for the address"
+      post_code:
+        type: string
+        description: "Address post code"
+  TelegramInlineQuery:
+    type: object
+    description: "This object represents an incoming inline query. When the user sends an empty query, your bot could return some default or trending results."
+    required: 
+    - id
+    - from
+    - query
+    - offset
+    properties:
+      id:
+        type: string
+        description: "Unique identifier for this query"
+      from:
+        $ref: '#/definitions/TelegramUser'
+      location:
+        $ref: '#/definitions/TelegramLocation'
+      query:
+        type: string
+        description: "Text of the query (up to 512 characters)"
+      offset:
+        type: string
+        description: "Offset of the results to be returned, can be controlled by the bot"
+  TelegramChosenInlineResult:
+    type: object
+    description: "Represents a result of an inline query that was chosen by the user and sent to their chat partner. Note: It is necessary to enable inline feedback via @Botfather in order to receive these objects in updates."
+    required:
+    - result_id
+    - from
+    - query
+    properties:
+      result_id:
+        type: string
+        description: "The unique identifier for the result that was chosen"
+      from:
+        $ref: '#/definitions/TelegramUser'
+      location:
+        $ref: '#/definitions/TelegramLocation'
+      inline_message_id:
+        type: string
+        description: "Identifier of the sent inline message. Available only if there is an inline keyboard attached to the message. Will be also received in callback queries and can be used to edit the message."
+      query:
+        type: string
+        description: "The query that was used to obtain the result"
+  TelegramCallbackQuery:
+    type: object
+    description: "This object represents an incoming callback query from a callback button in an inline keyboard. If the button that originated the query was attached to a message sent by the bot, the field message will be present. If the button was attached to a message sent via the bot (in inline mode), the field inline_message_id will be present. Exactly one of the fields data or game_short_name will be present. NOTE: After the user presses a callback button, Telegram clients will display a progress bar until you call answerCallbackQuery. It is, therefore, necessary to react by calling answerCallbackQuery even if no notification to the user is needed (e.g., without specifying any of the optional parameters)."
+    required: 
+    - id
+    - from
+    - chat_instance
+    - data
+    - game_short_name
+    properties:
+      id:
+        type: string
+        description: "Unique identifier for this query"
+      from:
+        $ref: '#/definitions/TelegramUser'
+      message:
+        $ref: '#/definitions/TelegramMessage'
+      inline_message_id:
+        type: string
+        description: "Identifier of the message sent via the bot in inline mode, that originated the query."
+      chat_instance:
+        type: string
+        description: "Global identifier, uniquely corresponding to the chat to which the message with the callback button was sent. Useful for high scores in games."
+      data:
+        type: string
+        description: "Data associated with the callback button. Be aware that a bad client can send arbitrary data in this field."
+      game_short_name:
+        type: string
+        description: "Short name of a Game to be returned, serves as the unique identifier for the game"
+  TelegramShippingQuery:
+    type: object
+    description: "This object contains information about an incoming shipping query."
+    required: 
+    - id
+    - from
+    - invoice_payload
+    - shipping_address
+    properties:
+      id:
+        type: string
+        description: "Unique query identifier"
+      from:
+        $ref: '#/definitions/TelegramUser'
+      invoice_payload:
+        type: string
+        description: "Bot specified invoice payload"
+      shipping_address:
+        $ref: '#/definitions/TelegramShippingAddress'
+  TelegramPreCheckoutQuery:
+    type: object
+    description: "This object contains information about an incoming pre-checkout query."
+    properties:
+      id:
+        type: string
+        description: "Unique query identifier"
+      from:
+        $ref: '#/definitions/TelegramUser'
+      currency:
+        type: string
+        description: "Three-letter ISO 4217 currency code"
+      total_amount:
+        type: integer
+        description: "Total price in the smallest units of the currency (integer, not float/double). For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies)."
+      invoice_payload:
+        type: string
+        description: "Bot specified invoice payload"
+      shipping_option_id:
+        type: string
+        description: "Identifier of the shipping option chosen by the user"
+      order_info:
+        $ref: '#/definitions/TelegramOrderInfo'
+  ApiResponse:
+    type: "object"
+    description: "Webhook response status"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

@@ -1,0 +1,28 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bot.Tests", "Bot.Tests\Bot.Tests.csproj", "{0CB1BFBB-E1B6-42C7-9561-BD465257E02B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EDA48DF9-6251-4462-8D7F-139845CF6AD4}"
+	ProjectSection(SolutionItems) = preProject
+		..\aws-credentials.txt = ..\aws-credentials.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram.Bot", "Telegram.Bot\Telegram.Bot.csproj", "{E1E8281E-EF50-4714-988C-98335522ED49}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CB1BFBB-E1B6-42C7-9561-BD465257E02B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CB1BFBB-E1B6-42C7-9561-BD465257E02B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CB1BFBB-E1B6-42C7-9561-BD465257E02B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CB1BFBB-E1B6-42C7-9561-BD465257E02B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1E8281E-EF50-4714-988C-98335522ED49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1E8281E-EF50-4714-988C-98335522ED49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1E8281E-EF50-4714-988C-98335522ED49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1E8281E-EF50-4714-988C-98335522ED49}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

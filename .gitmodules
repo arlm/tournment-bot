@@ -1,3 +1,6 @@
 [submodule "NetTelegramBotApi"]
 	path = NetTelegramBotApi
 	url = git@github.com:arlm/NetTelegramBotApi.git
+[submodule "NUnit.Rx"]
+	path = NUnit.Rx
+	url = git@github.com:arlm/NUnit.Rx.git

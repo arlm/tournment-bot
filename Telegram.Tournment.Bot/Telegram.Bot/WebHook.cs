@@ -2,17 +2,16 @@
 using System.Net;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
-using Amazon.Lambda.Serialization.Json;
 
-[assembly: LambdaSerializer(typeof(JsonSerializer))]
+[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
 
 namespace Telegram.Bot
 {
 	public class WebHook
-	{
+	{     
 		public APIGatewayProxyResponse Post(APIGatewayProxyRequest request, ILambdaContext context)
 		{
-			// Log entries show up in CloudWatch
+            // Log entries show up in CloudWatch
 			context.Logger.LogLine("Example log entry\n");
 
 			var response = new APIGatewayProxyResponse

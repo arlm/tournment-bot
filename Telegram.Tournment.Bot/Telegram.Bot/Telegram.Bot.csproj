@@ -12,6 +12,9 @@
         <DotNetCliToolReference Include="Amazon.Lambda.Tools" Version="2.2" />
     </ItemGroup -->
     <ItemGroup>
-        <ProjectReference Include="..\..\NetTelegramBotApi\NetTelegramBotApi\NetTelegramBotApi.NetStandard.csproj" />
+        <ProjectReference Include="..\Telegram.Bot.Core\Telegram.Bot.Core.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="CallbackQueryEvent.cs" />
     </ItemGroup>
 </Project>

@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTelegramBotApi.NetCore.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramBotDemo-vNext", "..\NetTelegramBotApi\TelegramBotDemo-vNext\TelegramBotDemo-vNext.csproj", "{CAF71548-9037-48D9-9B95-32E81231AAE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram.Bot.Core", "Telegram.Bot.Core\Telegram.Bot.Core.csproj", "{6F31F466-65E5-48F4-85FE-FBA67ADC07B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnit.Rx", "..\NUnit.Rx\NUnit.Rx.csproj", "{B190EFA1-B7A7-4DE0-A703-CC320A228F84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +46,13 @@ Global
 		{CAF71548-9037-48D9-9B95-32E81231AAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAF71548-9037-48D9-9B95-32E81231AAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAF71548-9037-48D9-9B95-32E81231AAE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F31F466-65E5-48F4-85FE-FBA67ADC07B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F31F466-65E5-48F4-85FE-FBA67ADC07B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F31F466-65E5-48F4-85FE-FBA67ADC07B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F31F466-65E5-48F4-85FE-FBA67ADC07B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B190EFA1-B7A7-4DE0-A703-CC320A228F84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B190EFA1-B7A7-4DE0-A703-CC320A228F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B190EFA1-B7A7-4DE0-A703-CC320A228F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B190EFA1-B7A7-4DE0-A703-CC320A228F84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
